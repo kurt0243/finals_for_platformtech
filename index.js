@@ -14,6 +14,7 @@ app.use(express.static(__dirname));
 
 // --- DATA ---
 const myName = "Kurt Angelo Labandelo";
+const myTitle = "Cloud Engineer / Architect";
 const mySection = "BSIT SM 4102"; 
 const myBounty = "6,000,000,000";
 
@@ -30,441 +31,391 @@ app.get('/', (req, res) => {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Wanted: Cloud Engineer</title>
-        <link href="https://fonts.googleapis.com/css2?family=Rye&family=Cinzel:wght@700&family=Calistoga&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+        <title>Profile: ${myName}</title>
+        <!-- Fonts: Cinzel (Regal), Rajdhani (Tech), Italiana (Elegant) -->
+        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Italiana&display=swap" rel="stylesheet">
         <style>
             :root {
-                --poster-paper: #f4e4bc;
-                --poster-ink: #2b2b2b;
-                --hawk-red: #b22222;      /* Firebrick/Maroon */
-                --hawk-crimson: #dc143c;  /* Crimson */
-                --hawk-glow: #ff0000;     /* Pure Red for highlights */
-                --blade-dark: #0a0a0a;
+                --crimson-dark: #2a0a0a;
+                --crimson-bright: #ff0f0f;
+                --crimson-glow: #ff3333;
+                --void-black: #050505;
+                --glass-border: rgba(255, 50, 50, 0.3);
+                --text-gold: #e5c100;
             }
 
-            * { box-sizing: border-box; }
+            * { box-sizing: border-box; margin: 0; padding: 0; }
 
             body {
-                background-color: #020000;
-                /* Deep Crimson Void Background */
-                background-image: radial-gradient(circle at 50% 100%, #3a0000 0%, #000000 85%);
-                font-family: 'Roboto', sans-serif;
-                color: #333;
+                background-color: var(--void-black);
+                color: #fff;
+                font-family: 'Rajdhani', sans-serif;
+                height: 100vh;
                 display: flex;
-                flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                min-height: 100vh;
-                margin: 0;
-                padding: 20px;
-                overflow-x: hidden;
-                perspective: 1000px;
+                overflow: hidden;
+                perspective: 1500px; /* Deep 3D space */
             }
 
-            /* --- CRIMSON AURA ENGINE --- */
-            .aura-layer {
+            /* --- DYNAMIC BACKGROUND --- */
+            .void-bg {
                 position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                pointer-events: none;
-                z-index: 0;
-                filter: contrast(1.6) brightness(1.1); 
+                top: 0; left: 0; width: 100%; height: 100%;
+                background: radial-gradient(circle at 50% 50%, #1a0000 0%, #000000 80%);
+                z-index: -2;
             }
-
-            .particle {
+            
+            .fog {
                 position: absolute;
-                border-radius: 50%;
-                opacity: 0;
-                mix-blend-mode: screen;
-            }
-
-            /* 1. Base Aura (Thick, Dark Red) */
-            .p-base {
-                background: radial-gradient(circle, rgba(139, 0, 0, 0.6) 0%, rgba(0,0,0,0) 70%);
-                bottom: -60px;
-                animation: floatBase linear infinite;
-                filter: blur(25px);
-            }
-
-            /* 2. Rising Slashes (Sharp, Crimson) */
-            .p-slash {
-                background: radial-gradient(circle, #ff4d4d 0%, rgba(178, 34, 34, 0.5) 60%, transparent 100%);
-                bottom: -30px;
-                animation: riseSlash linear infinite;
-                filter: blur(6px);
-            }
-
-            /* 3. Hawk Eye Orbs (Tiny, Glowing) */
-            .p-orb {
-                background: #fff;
-                bottom: 0;
-                box-shadow: 0 0 15px var(--hawk-glow);
-                animation: orbFloat linear infinite;
-            }
-
-            @keyframes floatBase {
-                0% { transform: translateX(0) scale(1); opacity: 0; }
-                20% { opacity: 0.5; }
-                100% { transform: translateX(30px) translateY(-150px) scale(1.8); opacity: 0; }
-            }
-
-            @keyframes riseSlash {
-                0% { transform: translateX(0) translateY(0) scale(1); opacity: 0; }
-                10% { opacity: 1; }
-                50% { transform: translateX(-10px) translateY(-40vh) scale(0.8, 1.5); }
-                100% { transform: translateX(10px) translateY(-90vh) scale(0, 2); opacity: 0; }
-            }
-
-            @keyframes orbFloat {
-                0% { transform: translateY(0) translateX(0); opacity: 1; }
-                100% { transform: translateY(-100vh) translateX(calc(-80px + 160px * var(--rnd))); opacity: 0; }
-            }
-
-            /* --- TEXT EFFECTS --- */
-            h1.main-title {
-                font-family: 'Cinzel', serif;
-                color: #fff;
-                font-size: 4rem;
-                font-weight: 700;
-                /* Crimson Glow */
-                text-shadow: 
-                    0 0 10px var(--hawk-crimson),
-                    0 0 20px var(--hawk-red),
-                    0 0 40px var(--hawk-glow);
-                margin-bottom: 60px;
-                letter-spacing: 6px;
-                z-index: 2;
-                text-transform: uppercase;
-                animation: glowPulse 3s infinite alternate, slideIn 1s ease-out;
-            }
-
-            @keyframes glowPulse {
-                0% { text-shadow: 0 0 10px var(--hawk-red), 0 0 20px rgba(0,0,0,0); opacity: 0.9; }
-                100% { text-shadow: 0 0 20px var(--hawk-crimson), 0 0 40px var(--hawk-red), 0 0 60px var(--hawk-glow); opacity: 1; }
-            }
-
-            .container {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 80px;
-                max-width: 1400px;
-                align-items: center;
-                z-index: 2;
-            }
-
-            .card-container { perspective: 1200px; }
-
-            .card-3d {
-                width: 340px;
-                height: 560px;
-                position: relative;
-                transition: transform 0.08s linear;
-                transform-style: preserve-3d;
-                animation: float 6s ease-in-out infinite;
-            }
-
-            /* --- WANTED POSTER --- */
-            .wanted-poster {
-                background-color: var(--poster-paper);
-                background-image: url('https://www.transparenttextures.com/patterns/paper.png');
-                width: 100%;
-                height: 100%;
-                padding: 25px 20px;
-                border: 1px solid #bfa77a;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                box-shadow: 0 30px 60px rgba(0,0,0,0.7);
-                transform: translateZ(0);
-            }
-
-            .wanted-poster::after {
-                content: '';
-                position: absolute;
-                top: -12px; width: 16px; height: 16px;
-                background: #111;
-                border-radius: 50%;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.8);
-                z-index: 5;
-            }
-
-            .wanted-title {
-                font-family: 'Rye', serif;
-                font-size: 4rem;
-                color: var(--poster-ink);
-                margin: 0 0 10px 0;
-                line-height: 0.8;
-                text-align: center;
-                width: 100%;
-            }
-
-            .image-frame {
-                width: 90%;
-                height: 220px;
-                background: #ddd;
-                border: 5px solid var(--poster-ink);
-                margin-bottom: 10px;
-                overflow: hidden;
-                transform: translateZ(20px);
-                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            }
-
-            .wanted-image { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.1); }
-
-            .dead-or-alive {
-                font-family: 'Calistoga', serif;
-                font-size: 1.6rem;
-                color: var(--poster-ink);
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                margin: 10px 0;
-            }
-
-            .wanted-name {
-                font-family: 'Calistoga', serif;
-                font-size: 1.9rem;
-                color: #2c2c2c;
-                text-transform: uppercase;
-                margin: 0;
-                line-height: 1.1;
-                transform: translateZ(30px);
-                text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
-                word-break: break-word;
-            }
-
-            .section-stamp {
-                margin: 15px 0;
-                color: #c0392b;
-                border: 3px solid #c0392b;
-                padding: 2px 10px;
-                transform: rotate(-8deg) translateZ(25px);
-                font-size: 1.2rem;
-                font-weight: bold;
-                font-family: 'Courier New', Courier, monospace;
-                opacity: 0.9;
-            }
-
-            .bounty-amount {
-                font-family: 'Calistoga', serif;
-                font-size: 1.8rem; 
-                color: #2c2c2c;
-                margin-top: auto;
-                margin-bottom: 30px;
-                letter-spacing: 0.5px;
-            }
-
-            .marine-footer {
-                position: absolute;
-                bottom: 15px; width: 100%; text-align: center;
-                font-family: 'Calistoga', serif; font-size: 2.2rem;
-                color: var(--poster-ink); opacity: 0.2; letter-spacing: 4px;
-            }
-
-            /* --- MIHAWK QUOTE CARD (RED/BLACK STYLE) --- */
-            .quote-card {
-                background: #0f0f0f;
-                background-image: linear-gradient(160deg, #1a0505 0%, #000000 100%);
-                width: 100%;
-                height: 100%;
-                padding: 30px 20px;
-                border-radius: 4px;
-                color: #fff;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: space-between;
-                border: 1px solid #330000;
-                box-shadow: 0 0 60px rgba(178, 34, 34, 0.3);
-                overflow: hidden;
-            }
-
-            /* Glowing Red Edge */
-            .quote-card::before {
-                content: '';
-                position: absolute;
-                inset: -2px;
-                background: linear-gradient(45deg, var(--hawk-red), #000, var(--hawk-glow), #000, var(--hawk-red));
-                background-size: 400%;
+                top: -50%; left: -50%; width: 200%; height: 200%;
+                background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+                animation: fogDrift 60s linear infinite;
+                opacity: 0.4;
                 z-index: -1;
+            }
+
+            @keyframes fogDrift {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+
+            /* --- MAIN CONTAINER (The Monolith) --- */
+            .monolith {
+                position: relative;
+                width: 1100px;
+                height: 650px;
+                background: rgba(10, 5, 5, 0.6);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border: 1px solid var(--glass-border);
                 border-radius: 4px;
-                animation: borderGlow 3s linear infinite;
-                opacity: 1;
+                display: flex;
+                box-shadow: 0 0 80px rgba(255, 0, 0, 0.15), inset 0 0 100px rgba(0,0,0,0.8);
+                transform-style: preserve-3d;
+                transition: transform 0.2s ease-out;
+                overflow: hidden;
+                animation: entranceZoom 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+                opacity: 0;
             }
 
-            /* Reddish Sheen */
-            .shine {
-                position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-                background: linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(178, 34, 34, 0.1) 50%, rgba(255,255,255,0) 100%);
-                pointer-events: none; z-index: 10;
+            /* Glowing Red Edge Pulse */
+            .monolith::before {
+                content: '';
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 0;
+                border-radius: 4px;
+                box-shadow: inset 0 0 30px var(--crimson-dark);
+                pointer-events: none;
+                z-index: 10;
             }
 
-            .mihawk-profile-image {
-                width: 180px; height: 180px; border-radius: 50%;
-                border: 4px solid var(--hawk-red); object-fit: cover;
-                transform: translateZ(40px);
-                box-shadow: 0 0 30px rgba(178, 34, 34, 0.5);
+            /* --- LEFT SIDE: USER PROFILE --- */
+            .profile-side {
+                flex: 1.2;
+                padding: 60px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                border-right: 1px solid rgba(255,50,50,0.1);
+                position: relative;
+                z-index: 2;
             }
 
-            .mihawk-icons {
-                font-size: 2.5rem; margin-top: 15px; transform: translateZ(20px);
-                text-shadow: 0 0 15px var(--hawk-red);
+            .profile-img-container {
+                width: 180px;
+                height: 180px;
+                margin-bottom: 40px;
+                position: relative;
             }
 
-            blockquote {
-                font-family: 'Cinzel', serif; font-size: 1.4rem; line-height: 1.5;
-                margin: 20px 0; color: #ffe0e0; text-align: center;
-                transform: translateZ(50px);
-                text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+            .profile-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 50%;
+                border: 2px solid var(--crimson-bright);
+                filter: grayscale(80%) contrast(1.2);
+                transition: all 0.5s ease;
+                box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+            }
+
+            .monolith:hover .profile-img {
+                filter: grayscale(0%) contrast(1.1);
+                box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
+            }
+
+            /* Rotating Tech Ring around image */
+            .tech-ring {
+                position: absolute;
+                top: -10px; left: -10px; right: -10px; bottom: -10px;
+                border: 1px dashed var(--crimson-glow);
+                border-radius: 50%;
+                animation: spin 20s linear infinite;
+            }
+
+            .user-name {
+                font-family: 'Cinzel', serif;
+                font-size: 3.5rem;
+                font-weight: 700;
+                line-height: 0.9;
+                margin-bottom: 10px;
+                background: linear-gradient(to right, #fff, #ccc);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            }
+
+            .user-role {
+                font-family: 'Rajdhani', sans-serif;
+                font-size: 1.2rem;
+                color: var(--crimson-bright);
+                text-transform: uppercase;
+                letter-spacing: 4px;
+                margin-bottom: 40px;
+                display: flex;
+                align-items: center;
+            }
+
+            .user-role::after {
+                content: '';
+                height: 1px;
+                flex: 1;
+                background: linear-gradient(90deg, var(--crimson-bright), transparent);
+                margin-left: 20px;
+            }
+
+            /* Data Stats Grid */
+            .stats-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+            }
+
+            .stat-box h4 {
+                font-size: 0.8rem;
+                color: #666;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                margin-bottom: 5px;
+            }
+
+            .stat-value {
+                font-size: 1.8rem;
+                font-family: 'Rajdhani', sans-serif;
+                font-weight: 700;
+                color: #fff;
+            }
+
+            .bounty-value {
+                color: var(--text-gold);
+                text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            }
+
+            /* --- RIGHT SIDE: MIHAWK SPIRIT --- */
+            .spirit-side {
+                flex: 1;
+                position: relative;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                padding: 60px;
+                background: linear-gradient(to left, rgba(0,0,0,0.8), transparent);
+            }
+
+            /* Background Character Image */
+            .spirit-bg {
+                position: absolute;
+                top: 0; right: 0;
+                width: 120%;
+                height: 100%;
+                object-fit: cover;
+                object-position: top center;
+                opacity: 0.6;
+                mask-image: linear-gradient(to right, transparent, black 40%);
+                -webkit-mask-image: linear-gradient(to right, transparent, black 40%);
+                transition: transform 6s ease;
+                z-index: 0;
+            }
+
+            .monolith:hover .spirit-bg {
+                transform: scale(1.05);
+            }
+
+            .quote-container {
+                position: relative;
+                z-index: 2;
+                border-left: 4px solid var(--crimson-bright);
+                padding-left: 30px;
+                background: linear-gradient(90deg, rgba(0,0,0,0.8), transparent);
+                backdrop-filter: blur(5px);
+            }
+
+            .quote-text {
+                font-family: 'Italiana', serif;
+                font-size: 1.8rem;
+                line-height: 1.4;
+                color: #eee;
+                margin-bottom: 20px;
+                font-style: italic;
             }
 
             .quote-author {
-                font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--hawk-glow);
-                font-weight: bold; letter-spacing: 4px; text-transform: uppercase;
-                transform: translateZ(20px); border-top: 1px solid #330000;
-                padding-top: 15px; width: 80%;
+                font-family: 'Cinzel', serif;
+                font-size: 1rem;
+                color: var(--crimson-bright);
+                letter-spacing: 3px;
+                text-transform: uppercase;
+                font-weight: 700;
             }
 
-            /* ANIMATIONS */
-            @keyframes float {
-                0%, 100% { transform: translateY(0); }
-                50% { transform: translateY(-15px); }
+            /* --- SLASH ANIMATION OVERLAY --- */
+            .slash-overlay {
+                position: fixed;
+                top: 0; left: 0; width: 100%; height: 100%;
+                background: #000;
+                z-index: 100;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: slashExit 0.8s cubic-bezier(0.7, 0, 0.3, 1) 0.5s forwards;
             }
-            @keyframes borderGlow { 0% { background-position: 0 0; } 100% { background-position: 400% 0; } }
-            @keyframes slideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-            @media (max-width: 800px) {
-                .main-title { font-size: 2.5rem; }
-                .container { gap: 40px; }
+            .slash-line {
+                position: absolute;
+                width: 150%;
+                height: 2px;
+                background: #fff;
+                box-shadow: 0 0 20px var(--crimson-bright);
+                transform: rotate(-45deg) scaleX(0);
+                animation: slashStrike 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
             }
+
+            @keyframes spin { 100% { transform: rotate(360deg); } }
+            
+            @keyframes entranceZoom {
+                from { transform: scale(0.9) translateY(50px); opacity: 0; }
+                to { transform: scale(1) translateY(0); opacity: 1; }
+            }
+
+            @keyframes slashStrike {
+                0% { transform: rotate(-45deg) scaleX(0); opacity: 0; }
+                50% { opacity: 1; }
+                100% { transform: rotate(-45deg) scaleX(1); opacity: 0; }
+            }
+
+            @keyframes slashExit {
+                0% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+                100% { clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); opacity: 0; pointer-events: none; }
+            }
+
+            /* --- MOBILE --- */
+            @media (max-width: 1000px) {
+                .monolith { flex-direction: column; height: auto; width: 90%; margin: 20px 0; }
+                .profile-side { border-right: none; border-bottom: 1px solid rgba(255,50,50,0.1); padding: 40px; }
+                .spirit-side { height: 400px; padding: 30px; }
+                .spirit-bg { width: 100%; mask-image: linear-gradient(to bottom, transparent, black 20%); }
+                .user-name { font-size: 2.5rem; }
+            }
+
         </style>
     </head>
     <body>
 
-        <!-- Crimson Aura Container -->
-        <div class="aura-layer" id="aura"></div>
+        <!-- INTRO SLASH ANIMATION -->
+        <div class="slash-overlay">
+            <div class="slash-line"></div>
+        </div>
 
-        <h1 class="main-title">The Strongest</h1>
+        <!-- BACKGROUND -->
+        <div class="void-bg"></div>
+        <div class="fog"></div>
 
-        <div class="container">
+        <!-- MAIN UI MONOLITH -->
+        <div class="monolith" id="card">
             
-            <!-- CARD 1: WANTED POSTER -->
-            <div class="card-container">
-                <div class="card-3d" id="poster">
-                    <div class="shine"></div>
-                    <div class="wanted-poster">
-                        <div class="wanted-title">WANTED</div>
-                        <div class="image-frame">
-                            <img src="${myImage}" alt="Target" class="wanted-image">
-                        </div>
-                        <div class="dead-or-alive">DEAD OR ALIVE</div>
-                        <div class="wanted-name">${myName}</div>
-                        <div class="section-stamp">${mySection}</div>
-                        <div class="bounty-amount">
-                            <span>฿</span> ${myBounty}-
-                        </div>
-                        <div class="marine-footer">MARINE</div>
+            <!-- LEFT: USER INFO -->
+            <div class="profile-side">
+                <div class="profile-img-container">
+                    <div class="tech-ring"></div>
+                    <img src="${myImage}" alt="Profile" class="profile-img">
+                </div>
+
+                <h1 class="user-name">${myName}</h1>
+                <div class="user-role">${myTitle}</div>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <h4>Class Section</h4>
+                        <div class="stat-value">${mySection}</div>
+                    </div>
+                    <div class="stat-box">
+                        <h4>Current Bounty</h4>
+                        <!-- Counter handled by JS -->
+                        <div class="stat-value bounty-value" id="bountyCounter">0</div>
                     </div>
                 </div>
             </div>
 
-            <!-- CARD 2: MIHAWK QUOTE -->
-            <div class="card-container">
-                <div class="card-3d" id="quote">
-                    <div class="shine"></div>
-                    <div class="quote-card">
-                        <img src="${mihawkImage}" alt="Mihawk" class="mihawk-profile-image">
-                        <div class="mihawk-icons">⚔️👁️🍷</div>
-                        <blockquote>
-                            "${myQuote}"
-                        </blockquote>
-                        <div class="quote-author">- ${quoteAuthor}</div>
-                    </div>
+            <!-- RIGHT: MIHAWK SPIRIT -->
+            <div class="spirit-side">
+                <img src="${mihawkImage}" alt="Mihawk" class="spirit-bg">
+                
+                <div class="quote-container">
+                    <p class="quote-text">"${myQuote}"</p>
+                    <div class="quote-author">— ${quoteAuthor}</div>
                 </div>
             </div>
 
         </div>
 
         <script>
-            // --- 1. AURA GENERATOR (UPDATED COLORS) ---
-            const auraContainer = document.getElementById('aura');
-            
-            function spawnParticle(type) {
-                const p = document.createElement('div');
-                p.classList.add('particle', type);
+            // --- 1. 3D TILT INTERACTION ---
+            const card = document.getElementById('card');
+            const container = document.body;
+
+            container.addEventListener('mousemove', (e) => {
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 40; // Increased divisor for subtlety
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 40;
+                card.style.transform = \`rotateY(\${xAxis}deg) rotateX(\${yAxis}deg)\`;
+            });
+
+            container.addEventListener('mouseleave', () => {
+                card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+            });
+
+            // --- 2. BOUNTY COUNTER ANIMATION ---
+            // Counts up like a computer calculation
+            const bountyElement = document.getElementById('bountyCounter');
+            const targetBounty = 6000000000;
+            const duration = 2500; // 2.5 seconds
+            const startTimestamp = performance.now();
+
+            function step(timestamp) {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
                 
-                // Random X start position
-                p.style.left = Math.random() * 100 + 'vw';
+                // Easing function for smooth finish
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
                 
-                let size, dur;
+                const currentVal = Math.floor(easeOutQuart * targetBounty);
                 
-                if(type === 'p-base') {
-                    size = Math.random() * 120 + 100; 
-                    dur = Math.random() * 4 + 5; 
-                } else if(type === 'p-slash') {
-                    size = Math.random() * 60 + 20;
-                    dur = Math.random() * 2 + 2; 
-                } else { // orb
-                    size = Math.random() * 6 + 3; 
-                    dur = Math.random() * 2 + 1; 
-                    p.style.setProperty('--rnd', Math.random());
+                // Format with commas and symbol
+                bountyElement.innerText = "฿ " + currentVal.toLocaleString();
+
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    bountyElement.innerText = "฿ " + targetBounty.toLocaleString() + "-";
                 }
-                
-                p.style.width = size + 'px';
-                p.style.height = size + 'px';
-                p.style.animationDuration = dur + 's';
-                
-                auraContainer.appendChild(p);
-                
-                setTimeout(() => { p.remove(); }, dur * 1000);
             }
 
-            // Generation Loops
-            setInterval(() => spawnParticle('p-base'), 250);
-            setInterval(() => spawnParticle('p-slash'), 60);
-            setInterval(() => spawnParticle('p-orb'), 40);
+            // Start counter after the slash animation (approx 1.5s delay)
+            setTimeout(() => {
+                window.requestAnimationFrame(step);
+            }, 1500);
 
-
-            // --- 2. INTERACTIVE 3D TILT ---
-            const cards = [document.getElementById('poster'), document.getElementById('quote')];
-
-            document.addEventListener('mousemove', (e) => {
-                const x = e.clientX;
-                const y = e.clientY;
-                const midX = window.innerWidth / 2;
-                const midY = window.innerHeight / 2;
-
-                // Aggressive tilt
-                const rotateX = ((y - midY) / midY) * -20;
-                const rotateY = ((x - midX) / midX) * 20;
-
-                cards.forEach(card => {
-                    card.style.animation = 'none'; 
-                    card.style.transform = \`rotateX(\${rotateX}deg) rotateY(\${rotateY}deg)\`;
-
-                    const shine = card.querySelector('.shine');
-                    const moveX = ((x / window.innerWidth) * 100) - 50;
-                    const moveY = ((y / window.innerHeight) * 100) - 50;
-                    
-                    // Red-tinted shine for Mihawk theme
-                    shine.style.background = \`linear-gradient(
-                        135deg, 
-                        rgba(255,255,255,0) \${0 + moveX + moveY}%, 
-                        rgba(178, 34, 34, 0.2) \${50 + moveX + moveY}%, 
-                        rgba(255,255,255,0) \${100 + moveX + moveY}%
-                    )\`;
-                });
-            });
-
-            document.addEventListener('mouseleave', () => {
-                cards.forEach((card) => {
-                    card.style.transform = 'rotateX(0) rotateY(0)';
-                    card.querySelector('.shine').style.background = 'none';
-                    card.style.animation = 'float 6s ease-in-out infinite';
-                });
-            });
         </script>
 
     </body>
